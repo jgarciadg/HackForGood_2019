@@ -14,13 +14,29 @@ class LoginPresenter(private val view: Login_MVP.View,
 
     private val lifecycleOwner = view as AppCompatActivity
 
+    override fun viewLoaded() {
+        model.getUser().observe(lifecycleOwner, Observer {
+            if (it != null) {
+                val intent = Intent(lifecycleOwner, NavigationDrawerActivity::class.java)
+                lifecycleOwner.startActivity(intent)
+            }
+        })
+    }
+
     override fun loginButtonClicked(username: String, password: String) {
         model.checkLoginIsCorrect(username, password).observe(lifecycleOwner, Observer {
             if (it!!.isNotEmpty())
                 view.showErrors(it)
             else {
-                val intent = Intent(lifecycleOwner, NavigationDrawerActivity::class.java)
-                lifecycleOwner.startActivity(intent)
+                model.loginUser(username, password).observe(lifecycleOwner, Observer {
+                    if (it!!.isNotEmpty())
+                        view.showErrors(it)
+                    else {
+                        val intent = Intent(lifecycleOwner, NavigationDrawerActivity::class.java)
+                        lifecycleOwner.startActivity(intent)
+                        lifecycleOwner.finish()
+                    }
+                })
             }
         })
     }

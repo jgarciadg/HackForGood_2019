@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 class APIClient {
     object Single {
-        private val BASE_URL = "http://qss.unex.es/"
+        private val BASE_URL = "http://qss.unex.es:2072/"
 
         private fun getRetrofit(): Retrofit {
             return Retrofit.Builder()

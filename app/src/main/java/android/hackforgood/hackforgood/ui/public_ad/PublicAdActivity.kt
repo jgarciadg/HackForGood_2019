@@ -1,19 +1,18 @@
-package android.hackforgood.hackforgood.ui.search_travel
+package android.hackforgood.hackforgood.ui.public_ad
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.hackforgood.hackforgood.R
-import android.hackforgood.hackforgood.data.search_travel.SearchTravelModel
+import android.hackforgood.hackforgood.data.public_ad.PublicAdModel
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.widget.DatePicker
 import android.widget.TimePicker
-import kotlinx.android.synthetic.main.activity_search_travel.*
+import kotlinx.android.synthetic.main.activity_public_ad.*
 import java.util.*
 
-
-class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener, SearchTravel_MVP.View {
-    private lateinit var presenter: SearchTravel_MVP.Presenter
+class PublicAdActivity : AppCompatActivity(), PublicAd_MVP.View, DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
+    private lateinit var presenter: PublicAd_MVP.Presenter
     private lateinit var datePickerDialog: DatePickerDialog
     private lateinit var timePickerDialog: TimePickerDialog
 
@@ -22,7 +21,7 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_travel)
+        setContentView(R.layout.activity_public_ad)
         setSupportActionBar(toolbar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
@@ -32,18 +31,19 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         setupDatePickerDialog()
         setupTimePickerDialog()
 
-        editTextDate.setOnClickListener {
+        dateEditText.setOnClickListener {
             presenter.dateEditTextSelected()
         }
-        editTextDate.setKeyListener(null)
+        dateEditText.setKeyListener(null)
 
-        editTextHour.setOnClickListener {
+        timeEditText.setOnClickListener {
             presenter.timeEditTextSelected()
         }
-        editTextHour.setKeyListener(null)
+        timeEditText.setKeyListener(null)
 
-        buttonSearch.setOnClickListener {
-            presenter.searchButtonSelected(string_time, string_date)
+        buttonPublic.setOnClickListener {
+            val max_people = maxPeopleEditText.text.toString()
+            presenter.publicAdButtonSelected(string_time, string_date, max_people)
         }
     }
 
@@ -61,12 +61,12 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     override fun onDateSet(view: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
         string_date = formatDate(year, month, dayOfMonth)
-        editTextDate.setText(string_date)
+        dateEditText.setText(string_date)
     }
 
     override fun onTimeSet(view: TimePicker?, hourOfDay: Int, minute: Int) {
         string_time = formatHour(hourOfDay, minute)
-        editTextHour.setText(string_time)
+        timeEditText.setText(string_time)
     }
 
     private fun setupDatePickerDialog() {
@@ -89,9 +89,6 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         timePickerDialog = TimePickerDialog(this, 0, this, hour, minute, true)
     }
 
-    private fun setupMVP() {
-        presenter = SearchTravelPresenter(this, SearchTravelModel())
-    }
 
     private fun formatDate(year: Int, month: Int, dayOfMonth: Int): String {
         val month_real = month + 1
@@ -116,5 +113,9 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             string_minute = "0$minute"
 
         return "$string_hour:$string_minute"
+    }
+
+    private fun setupMVP() {
+        presenter = PublicAdPresenter(this, PublicAdModel())
     }
 }

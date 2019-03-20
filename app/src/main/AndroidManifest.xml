@@ -27,10 +27,14 @@
             android:name=".ui.navigation_drawer.NavigationDrawerActivity"
             android:label="@string/title_activity_navigation_drawer"
             android:theme="@style/AppTheme.NoActionBar" />
-
         <activity
             android:name=".ui.search_travel.SearchTravelActivity"
             android:label="Buscar viaje"
+            android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.public_ad.PublicAdActivity"
+            android:label="Publicar viaje"
             android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>

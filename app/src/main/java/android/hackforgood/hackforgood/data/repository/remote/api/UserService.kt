@@ -9,6 +9,9 @@ import retrofit2.http.POST
  * Created by justo on 15/03/2019.
  */
 interface UserService {
-    @POST("url")//TODO set URL to register User
+    @POST("registry")
     fun registerUser(@Body user: User): Call<Void>
+
+    @POST("login")
+    fun loginUser(@Body loginUser: User): Call<Void>
 }

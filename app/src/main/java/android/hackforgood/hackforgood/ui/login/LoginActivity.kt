@@ -27,6 +27,8 @@ class LoginActivity : AppCompatActivity(), Login_MVP.View {
         registerButton.setOnClickListener {
             presenter.registerButtonClicked()
         }
+
+        presenter.viewLoaded()
     }
 
     override fun showErrors(errors: List<String>) {

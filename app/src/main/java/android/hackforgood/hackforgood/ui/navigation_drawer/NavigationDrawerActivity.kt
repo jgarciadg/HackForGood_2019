@@ -2,6 +2,7 @@ package android.hackforgood.hackforgood.ui.navigation_drawer
 
 import android.content.Intent
 import android.hackforgood.hackforgood.R
+import android.hackforgood.hackforgood.ui.public_ad.PublicAdActivity
 import android.hackforgood.hackforgood.ui.search_travel.SearchTravelActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -60,11 +61,10 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 val intent = Intent(this, SearchTravelActivity::class.java)
                 startActivity(intent)
             }
-            R.id.nav_slideshow -> {
+            R.id.public_ad -> {
+                val intent = Intent(this, PublicAdActivity::class.java)
+                startActivity(intent)
             }
-            R.id.nav_manage -> {
-            }
-
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
