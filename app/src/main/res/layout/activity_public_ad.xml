@@ -15,8 +15,62 @@
         android:theme="@style/appBarWithBackground"
         app:titleTextColor="@android:color/white" />
 
+    <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+        android:id="@+id/citySpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        app:DoneSearchTintColor="@android:color/holo_purple"
+        app:RevealEmptyText="Ciudad partida"
+        app:RevealViewBackgroundColor="@android:color/transparent"
+        app:SearchHintText="Ciudad"
+        app:SearchViewBackgroundColor="@android:color/secondary_text_dark"
+        app:ShowBorders="false"
+        app:SpinnerExpandHeight="300dp"
+        app:StartSearchTintColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+
+    <gr.escsoft.michaelprimez.searchablespinner.SearchableSpinner
+        android:id="@+id/centerSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        app:DoneSearchTintColor="@android:color/holo_purple"
+        app:RevealEmptyText="Centro destino"
+        app:RevealViewBackgroundColor="@android:color/transparent"
+        app:SearchHintText="Centro"
+        app:SearchViewBackgroundColor="@android:color/secondary_text_dark"
+        app:ShowBorders="false"
+        app:SpinnerExpandHeight="300dp"
+        app:StartSearchTintColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/citySpinner" />
+
     <EditText
         android:id="@+id/timeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"
+        android:clickable="true"
+        android:cursorVisible="false"
+        android:inputType="date"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView7" />
+
+    <EditText
+        android:id="@+id/timeGoEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20dp"
@@ -76,17 +130,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Selecciona el día de tu cita"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/centerSpinner" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
+        android:text="Selecciona la hora de salida"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/timeEditText" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:text="Selecciona la hora de tu cita"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/dateEditText" />
@@ -96,15 +160,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:text="Selecciona el número máximo de acompañantes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/timeGoEditText" />
 
     <TextView
         android:id="@+id/errorTextView"
         android:layout_width="0dp"
-        android:layout_height="66dp"
+        android:layout_height="32dp"
         android:layout_marginBottom="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"

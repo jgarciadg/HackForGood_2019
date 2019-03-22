@@ -14,13 +14,13 @@ class RegisterPresenter(private val view: Register_MVP.View,
 
     private val lifecycleOwner = view as AppCompatActivity
 
-    override fun registerButtonClicked(name: String, lastName: String, age: String, sex: String, username: String, password: String) {
+    override fun registerButtonClicked(name: String, lastName: String, age: String, sex: String, username: String, password: String, phone: String) {
         model.checkIfRegisterIsCorrect(name, lastName, age, sex, username, password)
                 .observe(lifecycleOwner, Observer {
                     if (it!!.isNotEmpty())
                         view.showErrors(it)
                     else {
-                        val user = User(username, password, name, lastName, age.toInt(), sex)
+                        val user = User(username, password, name, lastName, age.toInt(), sex, telephone = phone)
                         model.registerUser(user).observe(lifecycleOwner, Observer {
 
                             if (it!!.isNotEmpty())

@@ -1,6 +1,7 @@
 package android.hackforgood.hackforgood.ui.register
 
 import android.hackforgood.hackforgood.R
+import android.hackforgood.hackforgood.common.PermissionsManager
 import android.hackforgood.hackforgood.data.register.RegisterModel
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -19,14 +20,18 @@ class RegisterActivity : AppCompatActivity(), Register_MVP.View {
 
         registerButton.setOnClickListener {
             registerProgressBar.visibility = View.VISIBLE
-
-            val name = nameEditText.text.toString()
-            val lastName = lastNameEditText.text.toString()
-            val age = ageEditText.text.toString()
-            val sex = sexSpinner.selectedItem.toString()
-            val username = usernameEditText.text.toString()
-            val password = passwordEditText.text.toString()
-            presenter.registerButtonClicked(name, lastName, age, sex, username, password)
+            if (!PermissionsManager.checkPermissions(this))
+                PermissionsManager.getPermissions(this)
+            else {
+                val name = nameEditText.text.toString()
+                val lastName = lastNameEditText.text.toString()
+                val age = ageEditText.text.toString()
+                val sex = sexSpinner.selectedItem.toString()
+                val username = usernameEditText.text.toString()
+                val password = passwordEditText.text.toString()
+                val phone = numberPhoneEditText.text.toString()
+                presenter.registerButtonClicked(name, lastName, age, sex, username, password, phone)
+            }
         }
     }
 
@@ -39,4 +44,20 @@ class RegisterActivity : AppCompatActivity(), Register_MVP.View {
     private fun setupMVP() {
         presenter = RegisterPresenter(this, RegisterModel(this))
     }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        if (PermissionsManager.checkPermissions(this)) {
+            val name = nameEditText.text.toString()
+            val lastName = lastNameEditText.text.toString()
+            val age = ageEditText.text.toString()
+            val sex = sexSpinner.selectedItem.toString()
+            val username = usernameEditText.text.toString()
+            val password = passwordEditText.text.toString()
+            val phone = numberPhoneEditText.text.toString()
+            presenter.registerButtonClicked(name, lastName, age, sex, username, password, phone)
+        }
+    }
+
 }

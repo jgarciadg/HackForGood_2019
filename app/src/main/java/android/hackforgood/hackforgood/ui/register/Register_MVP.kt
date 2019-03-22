@@ -12,7 +12,7 @@ interface Register_MVP {
     }
 
     interface Presenter {
-        fun registerButtonClicked(name: String, lastName: String, age: String, sex: String, username: String, password: String)
+        fun registerButtonClicked(name: String, lastName: String, age: String, sex: String, username: String, password: String, phone: String)
     }
 
     interface Model {

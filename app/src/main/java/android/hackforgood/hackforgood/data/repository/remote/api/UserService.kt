@@ -3,6 +3,8 @@ package android.hackforgood.hackforgood.data.repository.remote.api
 import android.hackforgood.hackforgood.data.model.User
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
+import retrofit2.http.Header
 import retrofit2.http.POST
 
 /**
@@ -14,4 +16,7 @@ interface UserService {
 
     @POST("login")
     fun loginUser(@Body loginUser: User): Call<Void>
+
+    @GET("user")
+    fun getUser(@Header("Authorization") username: String): Call<User>
 }

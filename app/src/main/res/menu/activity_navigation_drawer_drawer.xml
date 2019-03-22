@@ -10,16 +10,17 @@
             android:title="Publica tu viaje" />
         <item
             android:id="@+id/search_travel"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_menu_search"
             android:title="Buscar viajes" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_menu_historial"
             android:title="Historial" />
         <item
-            android:id="@+id/nav_manage"
+            android:id="@+id/nav_own_ads"
             android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:title="Mis viajes" />
+
     </group>
 
 </menu>

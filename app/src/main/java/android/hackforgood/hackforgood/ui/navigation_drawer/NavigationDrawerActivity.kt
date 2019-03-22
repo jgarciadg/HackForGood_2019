@@ -4,6 +4,8 @@ import android.content.Intent
 import android.hackforgood.hackforgood.R
 import android.hackforgood.hackforgood.ui.public_ad.PublicAdActivity
 import android.hackforgood.hackforgood.ui.search_travel.SearchTravelActivity
+import android.hackforgood.hackforgood.ui.see_own_ads.SeeOwnAdsActivity
+import android.hackforgood.hackforgood.ui.see_profile.SeeProfileActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -12,8 +14,12 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.squareup.picasso.MemoryPolicy
+import com.squareup.picasso.NetworkPolicy
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_navigation_drawer.*
 import kotlinx.android.synthetic.main.app_bar_navigation_drawer.*
+import kotlinx.android.synthetic.main.nav_header_navigation_drawer.view.*
 
 class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -33,6 +39,13 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
         toolbar.title = "HackForGood"
 
         nav_view.setNavigationItemSelectedListener(this)
+
+        nav_view.getHeaderView(0).imageImageView.setOnClickListener {
+            startActivity(Intent(this, SeeProfileActivity::class.java))
+        }
+
+        val presenter = NavigationDrawerPresenter(this)
+        presenter.viewLoaded()
     }
 
     override fun onBackPressed() {
@@ -65,9 +78,25 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 val intent = Intent(this, PublicAdActivity::class.java)
                 startActivity(intent)
             }
+            R.id.nav_own_ads -> {
+                val intent = Intent(this, SeeOwnAdsActivity::class.java)
+                startActivity(intent)
+            }
         }
 
         drawer_layout.closeDrawer(GravityCompat.START)
         return true
+    }
+
+    fun loadImageView(urlImage: String) {
+        Picasso.get()
+                .load(urlImage)
+                .networkPolicy(NetworkPolicy.NO_CACHE)
+                .memoryPolicy(MemoryPolicy.NO_CACHE)
+                .into(nav_view.getHeaderView(0).imageImageView);
+    }
+
+    fun loadName(allname: String) {
+        nav_view.getHeaderView(0).nameTextView.text = allname
     }
 }

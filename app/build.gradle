@@ -40,6 +40,21 @@ dependencies {
     implementation "android.arch.persistence.room:runtime:1.1.1"
     kapt "android.arch.persistence.room:compiler:1.1.1"
 
+    //Circle Image View
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    //Color Rating
+    implementation 'hyogeun.github.com.colorratingbar:ColorRatingBar:1.0.1'
+
+    //Picasso
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //Searchable Spinner
+    implementation 'gr.escsoft.michaelprimez.searchablespinner:SearchableSpinner:1.0.9'
+
+    //Loggin Interceptor
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.1'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'

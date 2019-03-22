@@ -3,6 +3,7 @@
     package="android.hackforgood.hackforgood">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +38,20 @@
             android:label="Publicar viaje"
             android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.see_profile.SeeProfileActivity"
+            android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.see_own_ads.SeeOwnAdsActivity"
+            android:label="Mis viajes"
+            android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".ui.see_ads_nearest.SeeAdsNearestActivity"
+            android:label="Viajes Recomendados"
+            android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

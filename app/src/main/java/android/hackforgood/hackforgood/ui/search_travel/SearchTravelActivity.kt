@@ -3,9 +3,11 @@ package android.hackforgood.hackforgood.ui.search_travel
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.hackforgood.hackforgood.R
+import android.hackforgood.hackforgood.data.model.Center
 import android.hackforgood.hackforgood.data.search_travel.SearchTravelModel
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.TimePicker
 import kotlinx.android.synthetic.main.activity_search_travel.*
@@ -19,6 +21,9 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     private var string_date = ""
     private var string_time = ""
+    private var idCenter = -1
+
+    private var centers: List<Center>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,8 +48,26 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         editTextHour.setKeyListener(null)
 
         buttonSearch.setOnClickListener {
-            presenter.searchButtonSelected(string_time, string_date)
+            idCenter = centers!![centerSpinner.selectedPosition].id
+            presenter.searchButtonSelected(string_time, string_date, idCenter)
         }
+
+        presenter.loadCities()
+        presenter.loadCenters()
+    }
+
+    override fun setCentersArray(data: List<Center>) {
+        centers = data
+    }
+
+    override fun setCitiesData(data: List<String>) {
+        val adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, data)
+        citySpinner.setAdapter(adapter)
+    }
+
+    override fun setCenterData(data: List<String>) {
+        val adapter = ArrayAdapter<String>(applicationContext, android.R.layout.simple_list_item_1, data)
+        centerSpinner.setAdapter(adapter)
     }
 
     override fun showTimePickerDialog() {
@@ -103,7 +126,7 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         if (dayOfMonth < 10)
             string_day = "0$dayOfMonth"
 
-        return "$string_day/$string_month/$year"
+        return "$year-$string_month-$string_day"
     }
 
     private fun formatHour(hourOfDay: Int, minute: Int): String {
@@ -115,6 +138,6 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         if (minute < 10)
             string_minute = "0$minute"
 
-        return "$string_hour:$string_minute"
+        return "$string_hour:$string_minute:00"
     }
 }

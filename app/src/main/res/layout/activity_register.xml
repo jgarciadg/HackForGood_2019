@@ -74,7 +74,7 @@
         android:id="@+id/passwordEditText"
         android:layout_width="0dp"
         android:layout_height="50dp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="20dp"
         android:layout_marginStart="20dp"
         android:backgroundTint="@android:color/white"
@@ -83,7 +83,7 @@
         android:textColor="@android:color/white"
         android:textColorHint="@android:color/white"
         android:textCursorDrawable="@android:color/white"
-        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintBottom_toTopOf="@+id/numberPhoneEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -148,6 +148,23 @@
         app:layout_constraintBottom_toTopOf="@+id/registerButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/passwordEditText" />
+        app:layout_constraintTop_toBottomOf="@+id/numberPhoneEditText" />
+
+    <EditText
+        android:id="@+id/numberPhoneEditText"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="50dp"
+        android:layout_marginEnd="200dp"
+        android:layout_marginStart="20dp"
+        android:backgroundTint="@android:color/white"
+        android:hint="Número"
+        android:inputType="phone"
+        android:textColor="@android:color/white"
+        android:textColorHint="@android:color/white"
+        android:textCursorDrawable="@android:color/white"
+        app:layout_constraintBottom_toTopOf="@+id/registerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

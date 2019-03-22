@@ -1,5 +1,6 @@
 package android.hackforgood.hackforgood.data.register
 
+import android.annotation.SuppressLint
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
@@ -10,7 +11,7 @@ import android.hackforgood.hackforgood.ui.register.Register_MVP
 /**
  * Created by justo on 15/03/2019.
  */
-class RegisterModel(context: Context) : Register_MVP.Model {
+class RegisterModel(private val context: Context) : Register_MVP.Model {
     private val correctRegisterLiveData = MutableLiveData<List<String>>()
     private val userRepository = UserRepository(context)
 
@@ -30,6 +31,7 @@ class RegisterModel(context: Context) : Register_MVP.Model {
         return correctRegisterLiveData
     }
 
+    @SuppressLint("MissingPermission")
     override fun registerUser(user: User): LiveData<List<String>> {
         return userRepository.registerUser(user)
     }

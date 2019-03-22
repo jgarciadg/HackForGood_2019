@@ -2,13 +2,27 @@ package android.hackforgood.hackforgood.data.public_ad
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.content.Context
+import android.hackforgood.hackforgood.data.model.Ad
+import android.hackforgood.hackforgood.data.model.Center
+import android.hackforgood.hackforgood.data.model.City
+import android.hackforgood.hackforgood.data.repository.AdRepository
+import android.hackforgood.hackforgood.data.repository.CenterRepository
+import android.hackforgood.hackforgood.data.repository.CityRepository
 import android.hackforgood.hackforgood.ui.public_ad.PublicAd_MVP
 
 /**
  * Created by justo on 20/03/2019.
  */
-class PublicAdModel : PublicAd_MVP.Model {
+class PublicAdModel(context: Context) : PublicAd_MVP.Model {
     private val correctData = MutableLiveData<List<String>>()
+    private val citiesRepository = CityRepository()
+    private val centerRepository = CenterRepository()
+    private val adRepository = AdRepository(context)
+
+    override fun publicAd(ad: Ad) {
+        adRepository.createAd(ad)
+    }
 
     override fun checkErrors(hour: String, date: String, max_people: String): LiveData<List<String>> {
         java.util.Timer().schedule(
@@ -39,5 +53,13 @@ class PublicAdModel : PublicAd_MVP.Model {
             errors.add("El número máximo de acompañantes no puede ser mayor que 4, sin contar al conductor")
 
         return errors
+    }
+
+    override fun loadCities(): LiveData<List<City>> {
+        return citiesRepository.getCities()
+    }
+
+    override fun loadCenters(): LiveData<List<Center>> {
+        return centerRepository.getCenters()
     }
 }
