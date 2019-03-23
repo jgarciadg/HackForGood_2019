@@ -21,7 +21,8 @@ class CenterRepository {
             }
 
             override fun onResponse(call: Call<List<Center>>?, response: Response<List<Center>>?) {
-                centerLiveData.postValue(response?.body()!!)
+                if(response?.body() != null)
+                    centerLiveData.postValue(response?.body()!!)
             }
 
         })

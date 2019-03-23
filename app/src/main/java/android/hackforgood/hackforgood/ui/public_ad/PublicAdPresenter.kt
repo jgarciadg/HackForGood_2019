@@ -5,6 +5,7 @@ import android.hackforgood.hackforgood.data.model.Ad
 import android.hackforgood.hackforgood.data.model.Center
 import android.hackforgood.hackforgood.data.model.City
 import android.support.v7.app.AppCompatActivity
+import kotlinx.android.synthetic.main.activity_search_travel.*
 
 /**
  * Created by justo on 20/03/2019.
@@ -18,13 +19,16 @@ class PublicAdPresenter(private val view: PublicAd_MVP.View, private val model: 
     var centers = listOf<Center>()
     var centersString = mutableListOf<String>()
 
-    override fun publicAdButtonSelected(string_time: String, string_date: String, string_time_go: String, max_people: String, indexCity: Int, indexCenter: Int) {
+    override fun publicAdButtonSelected(string_time: String, string_date: String, string_time_go: String, max_people: String,citySelected: String, centerSelected: String) {
         model.checkErrors(string_time, string_date, max_people).observe((view as AppCompatActivity), Observer {
             if (it!!.isNotEmpty())
                 view.showErrors(it)
             else {
-                val idCity = cities[indexCity].id
-                val idCenter = centers[indexCenter].id
+
+                val city = cities.filter { city -> city.name == citySelected }.single()
+                val center  = centers.filter { center -> center.name == centerSelected }.single()
+                val idCity = city.id
+                val idCenter = center.id
 
                 val ad = Ad(idCity, idCenter, string_date, string_time_go, string_time, max_people.toInt())
                 model.publicAd(ad)

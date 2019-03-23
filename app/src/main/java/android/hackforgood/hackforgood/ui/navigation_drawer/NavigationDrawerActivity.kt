@@ -5,7 +5,9 @@ import android.hackforgood.hackforgood.R
 import android.hackforgood.hackforgood.ui.public_ad.PublicAdActivity
 import android.hackforgood.hackforgood.ui.search_travel.SearchTravelActivity
 import android.hackforgood.hackforgood.ui.see_own_ads.SeeOwnAdsActivity
+import android.hackforgood.hackforgood.ui.see_own_ads.SeeOwnAdsFragment
 import android.hackforgood.hackforgood.ui.see_profile.SeeProfileActivity
+import android.hackforgood.hackforgood.ui.see_requests.SeeRequestsActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.design.widget.Snackbar
@@ -26,11 +28,11 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_navigation_drawer)
+        window.statusBarColor = resources.getColor(R.color.colorSecondary)
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show()
-        }
+        supportFragmentManager.beginTransaction()
+                .add(R.id.fragment_container, SeeOwnAdsFragment())
+                .commit()
 
         val toggle = ActionBarDrawerToggle(this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -78,8 +80,8 @@ class NavigationDrawerActivity : AppCompatActivity(), NavigationView.OnNavigatio
                 val intent = Intent(this, PublicAdActivity::class.java)
                 startActivity(intent)
             }
-            R.id.nav_own_ads -> {
-                val intent = Intent(this, SeeOwnAdsActivity::class.java)
+            R.id.nav_requests -> {
+                val intent = Intent(this, SeeRequestsActivity::class.java)
                 startActivity(intent)
             }
         }

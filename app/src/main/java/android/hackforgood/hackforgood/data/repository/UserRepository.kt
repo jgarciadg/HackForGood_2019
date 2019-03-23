@@ -19,10 +19,24 @@ class UserRepository(context: Context) {
     private val errorsLiveData = MutableLiveData<List<String>>()
 
     private val userService = APIClient.Single.getUserService()
+    private val userLiveData = MutableLiveData<User>()
     private val userDao = Hack4GoodDatabase.getInstance(context)?.userDao()
 
     fun getUser(): LiveData<User> {
         return userDao!!.getUser()
+    }
+
+    fun getUserById(idUser: Int): LiveData<User> {
+        userService.getUserById(idUser).enqueue(object : Callback<User> {
+            override fun onFailure(call: Call<User>?, t: Throwable?) {
+            }
+
+            override fun onResponse(call: Call<User>?, response: Response<User>?) {
+                userLiveData.postValue(response?.body())
+            }
+
+        })
+        return userLiveData
     }
 
     fun loginUser(username: String, password: String): LiveData<List<String>> {

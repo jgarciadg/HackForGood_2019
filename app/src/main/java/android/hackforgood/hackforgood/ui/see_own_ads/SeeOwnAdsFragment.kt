@@ -1,48 +1,44 @@
 package android.hackforgood.hackforgood.ui.see_own_ads
 
 import android.content.Intent
+import android.os.Bundle
+import android.support.v4.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+
 import android.hackforgood.hackforgood.R
 import android.hackforgood.hackforgood.data.model.Ad
 import android.hackforgood.hackforgood.data.model.Center
 import android.hackforgood.hackforgood.data.model.City
 import android.hackforgood.hackforgood.data.see_own_ads.SeeOwnAdsModel
 import android.hackforgood.hackforgood.ui.ad_detail.AdDetailActivity
-import android.os.Bundle
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import kotlinx.android.synthetic.main.activity_see_own_ads.*
 import kotlinx.android.synthetic.main.card_ads.view.*
 
 
-class SeeOwnAdsActivity : AppCompatActivity(), SeeOwnAds_MVP.View {
-    override fun setDataCity(data: List<City>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
+class SeeOwnAdsFragment : Fragment(), SeeOwnAds_MVP.View {
     private lateinit var presenter: SeeOwnAds_MVP.Presenter
     private var centers: List<Center>? = null
     private var ads: List<Ad>? = null
+    private var cities: List<City>? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_see_own_ads)
-        setSupportActionBar(toolbar)
-        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar()?.setDisplayShowHomeEnabled(true);
-        window.statusBarColor = resources.getColor(R.color.colorSecondary)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_see_own_ads, container, false)
 
         setupMVP()
 
         presenter.viewLoaded()
+
+        return view
     }
 
     private fun setupRecView(data: List<Ad>) {
         progressBar.visibility = View.GONE
-        val llm = LinearLayoutManager(this)
+        val llm = LinearLayoutManager(activity)
         recView.setLayoutManager(llm)
 
         val adapter = RVAdapter(data)
@@ -51,24 +47,25 @@ class SeeOwnAdsActivity : AppCompatActivity(), SeeOwnAds_MVP.View {
 
     override fun setDataCenter(data: List<Center>) {
         centers = data
-        if (ads != null)
+        if (ads != null && cities != null)
+            setupRecView(ads!!)
+    }
+
+    override fun setDataCity(data: List<City>) {
+        cities = data
+        if (ads != null && centers != null)
             setupRecView(ads!!)
     }
 
     override fun setDataToShow(data: List<Ad>?) {
-        if (ads != null) {
-            ads = data
-            if (centers != null)
-                setupRecView(ads!!)
-        } else {
-            textViewEmpty.visibility = View.VISIBLE
-        }
+        ads = data
+        if (centers != null && ads != null && cities != null)
+            setupRecView(ads!!)
     }
 
     private fun setupMVP() {
-        presenter = SeeOwnAdsPresenter(this, SeeOwnAdsModel(this))
+        presenter = SeeOwnAdsPresenter(this, SeeOwnAdsModel(activity!!))
     }
-
 
     inner class RVAdapter(private val data: List<Ad>) : RecyclerView.Adapter<RVAdapter.AdViewHolder>() {
 
@@ -89,12 +86,14 @@ class SeeOwnAdsActivity : AppCompatActivity(), SeeOwnAds_MVP.View {
             viewholder.hourProvTextView.text = ad.timeArriveProvisional
 
             val center = centers!!.filter { center -> center.id == ad.idCenter }.single()
-            viewholder.nameCenterTextView.text = center.name
+            val localidad = cities!!.filter { city -> city.id == ad.idLocalidad}.single()
 
+            viewholder.nameCenterTextView.text = center.name
+            viewholder.salidaTextView.text = localidad.name
             viewholder.button.visibility = View.GONE
 
             viewholder.card.setOnClickListener {
-                val intent = Intent(this@SeeOwnAdsActivity, AdDetailActivity::class.java)
+                val intent = Intent(activity, AdDetailActivity::class.java)
                 intent.putExtra("ad", ad)
                 startActivity(intent)
             }
@@ -106,6 +105,7 @@ class SeeOwnAdsActivity : AppCompatActivity(), SeeOwnAds_MVP.View {
             var nameCenterTextView = itemView.nameCenterTextView
             var card = itemView.card
             var button = itemView.buttonRequest
+            var salidaTextView = itemView.salidaTextView
         }
 
     }

@@ -11,8 +11,10 @@ class NavigationDrawerPresenter(private val view: NavigationDrawerActivity) {
 
     fun viewLoaded() {
         userDao!!.getUser().observe(view, Observer {
-            view.loadImageView("http://qss.unex.es:2072/user/photo/${it!!.photo}")
-            view.loadName("${it.firstName} ${it.lastName}")
+            if(it != null) {
+                view.loadImageView("http://qss.unex.es:2072/user/photo/${it!!.photo}")
+                view.loadName("${it.firstName} ${it.lastName}")
+            }
         })
     }
 }

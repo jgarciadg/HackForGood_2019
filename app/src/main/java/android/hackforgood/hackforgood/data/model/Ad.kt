@@ -1,8 +1,9 @@
 package android.hackforgood.hackforgood.data.model
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
-data class Ad(
+data class Ad (
         @SerializedName("id_localidad")
         var idLocalidad: Int,
         @SerializedName("id_center")
@@ -21,4 +22,4 @@ data class Ad(
         var finalized: Boolean = false,
         var id: Int = 10,
         var id_creator: Int = 10
-)
+): Serializable

@@ -13,6 +13,7 @@ interface SearchTravel_MVP {
         fun showDatePickerDialog()
         fun showErrors(errors: List<String>)
         fun setCentersArray(data: List<Center>)
+        fun setCitiesArray(data: List<City>)
         fun setCitiesData(data: List<String>)
         fun setCenterData(data: List<String>)
     }
@@ -22,7 +23,7 @@ interface SearchTravel_MVP {
         fun dateEditTextSelected()
         fun loadCities()
         fun loadCenters()
-        fun searchButtonSelected(hour: String, date: String, idCenter: Int)
+        fun searchButtonSelected(hour: String, date: String, idCenter: Int, idLocalidad: Int)
     }
 
     interface Model {

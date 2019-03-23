@@ -22,6 +22,7 @@ class SeeProfileActivity : AppCompatActivity(), SeeProfile_MVP.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true);
         supportActionBar?.setDisplayShowHomeEnabled(true);
         supportActionBar?.title = null
+        window.statusBarColor = resources.getColor(R.color.colorSecondary)
 
         setupMVP()
 

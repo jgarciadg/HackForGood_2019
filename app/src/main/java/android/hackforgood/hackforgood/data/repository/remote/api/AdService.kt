@@ -12,7 +12,7 @@ interface AdService {
     fun createAd(@Header("Authorization") username: String, @Body ad: Ad): Call<Void>
 
     @GET("ad/{id}")
-    fun getAd(@Path("id") id: Int): Call<Void>
+    fun getAd(@Path("id") id: Int): Call<Ad>
 
     @PUT("ad/{id}")
     fun endAd(@Path("id") id: Int, @Body finalized: Boolean): Call<Void>
@@ -24,10 +24,12 @@ interface AdService {
     fun getAdsRecommended(@Header("Authorization") username: String,
                           @Query("day") day: String,
                           @Query("hour_appointment") hour: String,
+                          @Query("id_localidad") idLocalidad: Int,
                           @Query("id_center") idCenter: Int): Call<List<Ad>>
 
     @GET("ad/allday")
     fun getAdsNearOthers(@Header("Authorization") username: String,
                          @Query("day") day: String,
+                         @Query("id_localidad") idLocalidad: Int,
                          @Query("id_center") idCenter: Int): Call<List<Ad>>
 }

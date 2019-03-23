@@ -25,7 +25,7 @@ interface PublicAd_MVP {
         fun timeEditTextSelected()
         fun timeGoEditTextSelected()
 
-        fun publicAdButtonSelected(string_time: String, string_date: String, string_time_go: String, max_people: String, indexCity: Int, indexCenter: Int)
+        fun publicAdButtonSelected(string_time: String, string_date: String, string_time_go: String, max_people: String, citySelected: String, centerSelected: String)
 
         fun loadCities()
         fun loadCenters()

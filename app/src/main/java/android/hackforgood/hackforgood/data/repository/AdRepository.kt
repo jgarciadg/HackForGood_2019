@@ -23,7 +23,7 @@ class AdRepository(private val context: Context) {
     private val adsLiveData = MutableLiveData<List<Ad>>()
     private val adsRecommendedLiveData = MutableLiveData<List<Ad>>()
     private val adsNearOthersLiveData = MutableLiveData<List<Ad>>()
-
+    private val adLiveData = MutableLiveData<Ad>()
 
     fun createAd(ad: Ad) {
         userDao!!.getUser().observe((context as AppCompatActivity), Observer {
@@ -40,23 +40,26 @@ class AdRepository(private val context: Context) {
 
     fun getOwnAds(): LiveData<List<Ad>> {
         userDao!!.getUser().observe((context as AppCompatActivity), Observer {
-            adService.getOwnAds(it?.username!!).enqueue(object : Callback<List<Ad>> {
-                override fun onFailure(call: Call<List<Ad>>?, t: Throwable?) {
-                    Log.d("", t.toString())
-                }
+            if (it != null) {
+                adService.getOwnAds(it?.username!!).enqueue(object : Callback<List<Ad>> {
+                    override fun onFailure(call: Call<List<Ad>>?, t: Throwable?) {
+                        Log.d("", t.toString())
+                    }
 
-                override fun onResponse(call: Call<List<Ad>>?, response: Response<List<Ad>>?) {
-                    adsLiveData.postValue(response!!.body())
-                }
-            })
+                    override fun onResponse(call: Call<List<Ad>>?, response: Response<List<Ad>>?) {
+                        if (response?.body() != null)
+                            adsLiveData.postValue(response.body())
+                    }
+                })
+            }
         })
 
         return adsLiveData
     }
 
-    fun getAdsRecommended(day: String, hour: String, idCenter: Int): LiveData<List<Ad>> {
+    fun getAdsRecommended(day: String, hour: String, idCenter: Int, idLocalidad: Int): LiveData<List<Ad>> {
         userDao!!.getUser().observe((context as AppCompatActivity), Observer {
-            adService.getAdsRecommended(it?.username!!, day, hour, idCenter)
+            adService.getAdsRecommended(it?.username!!, day, hour, idLocalidad, idCenter)
                     .enqueue(object : Callback<List<Ad>> {
                         override fun onFailure(call: Call<List<Ad>>?, t: Throwable?) {
                             Log.d("", t.toString())
@@ -71,9 +74,9 @@ class AdRepository(private val context: Context) {
         return adsRecommendedLiveData
     }
 
-    fun getAdsNearOthers(day: String, idCenter: Int): LiveData<List<Ad>> {
+    fun getAdsNearOthers(day: String, idCenter: Int, idLocalidad: Int): LiveData<List<Ad>> {
         userDao!!.getUser().observe((context as AppCompatActivity), Observer {
-            adService.getAdsNearOthers(it?.username!!, day, idCenter)
+            adService.getAdsNearOthers(it?.username!!, day, idLocalidad, idCenter)
                     .enqueue(object : Callback<List<Ad>> {
                         override fun onFailure(call: Call<List<Ad>>?, t: Throwable?) {
                             Log.d("", t.toString())
@@ -86,5 +89,19 @@ class AdRepository(private val context: Context) {
         })
 
         return adsNearOthersLiveData
+    }
+
+    fun getAd(idAd: Int): LiveData<Ad> {
+        adService.getAd(idAd)
+                .enqueue(object : Callback<Ad> {
+                    override fun onFailure(call: Call<Ad>?, t: Throwable?) {
+                    }
+
+                    override fun onResponse(call: Call<Ad>?, response: Response<Ad>?) {
+                        adLiveData.postValue(response?.body())
+                    }
+
+                })
+        return adLiveData
     }
 }

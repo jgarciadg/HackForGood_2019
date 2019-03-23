@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity
 class SearchTravelPresenter(private val view: SearchTravel_MVP.View, private val model: SearchTravel_MVP.Model) : SearchTravel_MVP.Presenter {
     val lifecycleOwner = view as AppCompatActivity
 
-    override fun searchButtonSelected(hour: String, date: String, idCenter: Int) {
+    override fun searchButtonSelected(hour: String, date: String, idCenter: Int, idLocalidad: Int) {
         model.checkErrors(hour, date).observe(lifecycleOwner, Observer {
             if (it!!.isNotEmpty())
                 view.showErrors(it)
@@ -20,6 +20,7 @@ class SearchTravelPresenter(private val view: SearchTravel_MVP.View, private val
                 intent.putExtra("hour", hour)
                 intent.putExtra("day", date)
                 intent.putExtra("idCenter", idCenter)
+                intent.putExtra("idLocalidad", idLocalidad)
                 lifecycleOwner.startActivity(intent)
             }
         })
@@ -33,6 +34,7 @@ class SearchTravelPresenter(private val view: SearchTravel_MVP.View, private val
             }
 
             view.setCitiesData(dataString)
+            view.setCitiesArray(it)
         })
     }
 

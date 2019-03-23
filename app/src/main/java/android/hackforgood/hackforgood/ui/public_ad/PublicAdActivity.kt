@@ -32,6 +32,7 @@ class PublicAdActivity : AppCompatActivity(), PublicAd_MVP.View, DatePickerDialo
         setSupportActionBar(toolbar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        window.statusBarColor = resources.getColor(R.color.colorSecondary)
 
 
         setupMVP()
@@ -58,8 +59,8 @@ class PublicAdActivity : AppCompatActivity(), PublicAd_MVP.View, DatePickerDialo
 
         buttonPublic.setOnClickListener {
             val max_people = maxPeopleEditText.text.toString()
-            val citySelected = citySpinner.selectedPosition
-            val centerSelected = centerSpinner.selectedPosition
+            val citySelected = citySpinner.selectedItem.toString()
+            val centerSelected = centerSpinner.selectedItem.toString()
 
             presenter.publicAdButtonSelected(string_time, string_date, string_time_go, max_people, citySelected, centerSelected)
         }

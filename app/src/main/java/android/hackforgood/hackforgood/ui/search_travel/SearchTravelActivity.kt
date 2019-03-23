@@ -4,6 +4,7 @@ import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.hackforgood.hackforgood.R
 import android.hackforgood.hackforgood.data.model.Center
+import android.hackforgood.hackforgood.data.model.City
 import android.hackforgood.hackforgood.data.search_travel.SearchTravelModel
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -22,8 +23,10 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private var string_date = ""
     private var string_time = ""
     private var idCenter = -1
+    private var idLocalidad = -1
 
     private var centers: List<Center>? = null
+    private var cities: List<City>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,7 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         setSupportActionBar(toolbar)
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         getSupportActionBar()?.setDisplayShowHomeEnabled(true);
+        window.statusBarColor = resources.getColor(R.color.colorSecondary)
 
         setupMVP()
 
@@ -48,8 +52,11 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         editTextHour.setKeyListener(null)
 
         buttonSearch.setOnClickListener {
-            idCenter = centers!![centerSpinner.selectedPosition].id
-            presenter.searchButtonSelected(string_time, string_date, idCenter)
+            val city = cities!!.filter { city -> city.name == citySpinner.selectedItem.toString() }.single()
+            val center  = centers!!.filter { center -> center.name == centerSpinner.selectedItem.toString() }.single()
+            idLocalidad = city.id
+            idCenter = center.id
+            presenter.searchButtonSelected(string_time, string_date, idCenter, idLocalidad)
         }
 
         presenter.loadCities()
@@ -58,6 +65,10 @@ class SearchTravelActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
     override fun setCentersArray(data: List<Center>) {
         centers = data
+    }
+
+    override fun setCitiesArray(data: List<City>) {
+        cities = data
     }
 
     override fun setCitiesData(data: List<String>) {

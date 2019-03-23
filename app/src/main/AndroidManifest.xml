@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="android.hackforgood.hackforgood">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -7,11 +8,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:icon="@drawable/icon_launcher"
+        android:label="YayoCar"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:label">
         <activity
             android:name=".ui.login.LoginActivity"
             android:theme="@style/FullScreen">
@@ -50,6 +51,16 @@
         <activity
             android:name=".ui.see_ads_nearest.SeeAdsNearestActivity"
             android:label="Viajes Recomendados"
+            android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.see_requests.SeeRequestsActivity"
+            android:label="Solicitudes"
+            android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.ad_detail.AdDetailActivity"
+            android:label="Anuncio"
             android:parentActivityName=".ui.navigation_drawer.NavigationDrawerActivity"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
